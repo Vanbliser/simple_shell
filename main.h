@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-
 /* Header files */
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,14 +10,32 @@
 #include <unistd.h>
 #include <wait.h>
 
+/* extern variable */
+extern char **environ;
+
+/* macro definitions */
+#define unused (__attribute__ ((unused)))
 
 /* Functions prototypes */
-char **split(char str[]);
+/*a function that splits a string into an array of each word of the string.*/
+char **split(char str[], int arrLength);
+
+/*a function duplicates a string into a dynamic memory */
 char *malloc_str(char *str);
+
+/*a function that slices a string by the delim into an array of the slices.*/
 char **slice(char *str, char *delim);
+
+/*a function that returns 0 if string s1 & s2 are equal, else the difference*/
 int _strcmp(char *s1, char *s2);
+
+/*a function that finds a key in a array of maps & returns the value of key*/
 char *key_finder(char **env, char *find);
+
+/*a function that concatenates two strings & returns dynamic memory to it*/
 char *_strcat(char *src1, char *src2);
+
+/*a function that frees an array of strings(av) malloc & a string(lineptr)*/
 void free_malloc(char *lineptr, char **av);
 
 
@@ -51,12 +68,12 @@ char *malloc_str(char *str)
  * split - a function that splits a string and returns an array of each word of
  * the string.
  * @str: the string to print
+ * @arrLength: initial length of the array
  *
  * Return: an array of each word of the string
  */
-char **split(char str[])
+char **split(char *str, int arrLength)
 {
-	static int arrLength = 1;
 	int i = 0, strLength = 1, varArrLength = arrLength;
 	char *varStr = str, **arr;
 
@@ -64,10 +81,10 @@ char **split(char str[])
 	{
 		if (!isspace(*varStr))
 			strLength++;
-		if (isspace(*varStr) && ((*varStr) != '\n') && !isspace(*(varStr + 1)))
+		if (isspace(*varStr) && !isspace(*(varStr + 1)) && *(varStr + 1) != '\0')
 		{
 			arrLength++;
-			arr = split(varStr + 1);
+			arr = split(varStr + 1, arrLength);
 			break;
 		}
 		varStr++;
@@ -80,11 +97,12 @@ char **split(char str[])
 		arr[varArrLength] = NULL;
 	}
 	arr[varArrLength - 1] = malloc(sizeof(char) * (strLength + 1));
-	while (!isspace(str[i]))
+	while (!isspace(str[i]) && str[i] != '\0')
 	{
 		arr[varArrLength - 1][i] = str[i];
 		i++;
 	}
+	arr[varArrLength - 1][i] = '\0';
 	return (arr);
 }
 
