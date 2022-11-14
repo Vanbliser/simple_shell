@@ -1,7 +1,9 @@
 #ifndef CUSTOM_H
 #define CUSTOM_H
 
-
+/**
+ * _getline - gets the next line of input from STDIN
+ */
 /* Helper function definition */
 
 ssize_t _getline(char **lineptr, size_t *n)
