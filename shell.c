@@ -3,7 +3,10 @@
 #include "execution.h"
 #include "custom.h"
 #include "helper.h"
-
+/**
+ *isatty - test whether a file descriptor refers to a terminal
+ *  return - success(1)
+ */
 int main(void)
 {
 	ssize_t nread;
